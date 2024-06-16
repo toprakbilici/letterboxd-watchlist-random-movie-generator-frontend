@@ -8,7 +8,7 @@ class Searchbox extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            film: '',
+            film: null,
             username: ''
         }
     }
@@ -33,6 +33,7 @@ class Searchbox extends React.Component{
             return response.json();
         })
         .then((data) => {
+            this.setState({film: data});
             console.log(data);
         })
         
@@ -49,6 +50,14 @@ class Searchbox extends React.Component{
                 />
                 <a onClick={this.onSubmitUsername} className="f6 link dim ba bw2 ph3 pv2 mb2 dib black">Bring Your Watchlist</a>
                 <a onClick={this.onGetMovie} className="f6 link dim ba bw2 ph3 pv2 mb2 dib black">Get Random Movie</a>
+                {this.state.film &&(
+                                        <div className="mt3">
+                                        <h2>Random Movie</h2>
+                                        <p>Title: {this.state.film.title}</p>
+                                        <p>Link: <a href={this.state.film.link} target="_blank" rel="noopener noreferrer">{this.state.film.link}</a></p>
+                                    </div>
+                )
+                }
             </div>
         );
     }
